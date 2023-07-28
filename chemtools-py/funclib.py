@@ -6,6 +6,18 @@ from functools import lru_cache
 
 @lru_cache(maxsize=32)
 def get_elements(lower_bound:int = 0,upper_bound: int = 100,raw: bool = False):
+
+    #check if bounds are correct and if not correct them
+    if upper_bound<lower_bound:
+        temp = upper_bound
+        upper_bound = lower_bound
+        lower_bound = temp
+    if upper_bound>118:
+        upper_bound=118
+    if lower_bound<0:
+        lower_bound=0
+        
+    
     #download json containig all info and if it`s already downloaded use it
     if not "chem_elements.json" in listdir():
         response = gt("https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json")
@@ -26,8 +38,6 @@ def get_elements(lower_bound:int = 0,upper_bound: int = 100,raw: bool = False):
     else:
         return data
 
-
-
 def molar_mass(formula: str) -> float:
     parsed_formula = parse_chemical_formula(formula)
     molar = 0.0
@@ -38,7 +48,8 @@ def molar_mass(formula: str) -> float:
     return molar
 
 def parse_chemical_formula(formula:str,error_finding: bool = True):
-    
+    #delete all spaces cuz they don`t have meaning in them and can make function do wrong outputs
+    formula = formula.replace(" ","")
     # Step 1: Extract and remove the whole molecule coefficient
     coefficient = 1
     for i, char in enumerate(formula):
@@ -61,8 +72,6 @@ def parse_chemical_formula(formula:str,error_finding: bool = True):
             primary_number *= coefficient # multiply count by the molecule's coefficient
             result[element] = result.get(element, 0) + primary_number
         else:
-            # when the parentheses has a multiplier (like H2O2),
-            # the coefficient is multiplied by the multiplier
             sub_coefficient = coefficient * (int(multiplier) if multiplier else 1)
             # Process the sub-formula recursively
             sub_result = parse_chemical_formula(sub_formula)
@@ -77,3 +86,24 @@ def parse_chemical_formula(formula:str,error_finding: bool = True):
                 raise ValueError(f"Error while parsing formula '{formula}': element '{i}' not found in element list")
             
     return result
+
+
+def check_equasion(eq:str) -> bool:
+    #taking in mind that eq should have this pattern a + b => c + d
+    first,second = eq.split("=>")
+    def count_half(hf:str) -> dict:
+        res = {}
+        hf = hf.split("+")
+        for l in hf:
+            for k,v in parse_chemical_formula(l).items():
+                if k in res:
+                    res[k] += v
+                else:
+                    res[k] = v
+        return res
+    t1,t2 = count_half(first),count_half(second)
+    print(t1,t2)
+    if count_half(first)==count_half(second):
+        return True
+    return False
+
