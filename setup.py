@@ -1,13 +1,15 @@
 from setuptools import setup
 setup(
-    name='chemtools',
-    version='0.0 pre_release_test',    
+    name='chemtools-py',
+    version='0.0',    
     description='A example Python package',
-    url='https://github.com/username/pyexample',
-    author='burntSynapse',
+    long_description="somewhat in the future",
+    url='https://github.com/KerrKerrKerr/chemtools-py',
+    download_url="https://github.com/KerrKerrKerr/chemtools-py.git",
+    author='burntSynaps3',
     author_email='ustinov2005@example.com',
-    license='',
-    packages=['chemtools'],
+    license='BRUH',
+    packages=['chemtools-py'],
     install_requires=[
         'requests',
         'json',

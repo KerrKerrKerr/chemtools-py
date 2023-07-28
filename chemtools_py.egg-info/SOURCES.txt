@@ -1,0 +1,10 @@
+README.md
+setup.cfg
+setup.py
+chemtools-py/__init__.py
+chemtools-py/funclib.py
+chemtools_py.egg-info/PKG-INFO
+chemtools_py.egg-info/SOURCES.txt
+chemtools_py.egg-info/dependency_links.txt
+chemtools_py.egg-info/requires.txt
+chemtools_py.egg-info/top_level.txt
