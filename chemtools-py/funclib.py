@@ -47,7 +47,7 @@ def molar_mass(formula: str) -> float:
         molar += float(element_to_mass[element]) * count
     return molar
 
-def parse_chemical_formula(formula:str,error_finding: bool = True):
+def parse_chemical_formula(formula:str,error_finding: bool = True) -> dict:
     #delete all spaces cuz they don`t have meaning in them and can make function do wrong outputs
     formula = formula.replace(" ","")
     # Step 1: Extract and remove the whole molecule coefficient
@@ -89,7 +89,7 @@ def parse_chemical_formula(formula:str,error_finding: bool = True):
 
 
 def check_equasion(eq:str) -> bool:
-    #taking in mind that eq should have this pattern a + b => c + d
+    #taking in mind that eq should have this pattern "a + b => c + d" or "a=>b+c+d+e"
     first,second = eq.split("=>")
     def count_half(hf:str) -> dict:
         res = {}
@@ -101,8 +101,6 @@ def check_equasion(eq:str) -> bool:
                 else:
                     res[k] = v
         return res
-    t1,t2 = count_half(first),count_half(second)
-    print(t1,t2)
     if count_half(first)==count_half(second):
         return True
     return False
