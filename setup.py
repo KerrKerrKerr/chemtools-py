@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name='chemtools-py',
-    version='0.0.1',    
+    version='0.0.2',    
     description='A example Python package',
     long_description="somewhat in the future",
     url='https://github.com/KerrKerrKerr/chemtools-py',
@@ -11,6 +11,6 @@ setup(
     license='BRUH',
     packages=['chemtools-py'],
     install_requires=[
-        
+        "sympy"
     ],
 )

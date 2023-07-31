@@ -19,6 +19,7 @@ def get_elements(lower_bound:int = 0,upper_bound: int = 100,raw: bool = False):
         
     
     #download json containig all info and if it`s already downloaded use it
+
     if not "chem_elements.json" in listdir():
         response = gt("https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json")
         #error while accessing
@@ -37,7 +38,7 @@ def get_elements(lower_bound:int = 0,upper_bound: int = 100,raw: bool = False):
         return [element['symbol'] for element in data['elements'] if lower_bound <= element['number'] <= upper_bound]
     else:
         return data
-
+@lru_cache(maxsize=32)
 def molar_mass(formula: str) -> float:
     parsed_formula = parse_chemical_formula(formula)
     molar = 0.0
@@ -46,7 +47,7 @@ def molar_mass(formula: str) -> float:
     for element, count in parsed_formula.items():
         molar += float(element_to_mass[element]) * count
     return molar
-
+@lru_cache(maxsize=32)
 def parse_chemical_formula(formula:str,error_finding: bool = True) -> dict:
     #delete all spaces cuz they don`t have meaning in them and can make function do wrong outputs
     formula = formula.replace(" ","")
@@ -88,6 +89,7 @@ def parse_chemical_formula(formula:str,error_finding: bool = True) -> dict:
     return result
 
 
+@lru_cache(maxsize=32)
 def check_equasion(eq:str) -> bool:
     #taking in mind that eq should have this pattern "a + b => c + d" or "a=>b+c+d+e"
     first,second = eq.split("=>")
@@ -104,4 +106,6 @@ def check_equasion(eq:str) -> bool:
     if count_half(first)==count_half(second):
         return True
     return False
+
+
 
